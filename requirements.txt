@@ -1,0 +1,5 @@
+Flask
+transformers
+opencv-python
+requests
+gensim

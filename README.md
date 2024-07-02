@@ -1,2 +1,2 @@
-# img2info
-A RAG based application to retreive information of text in images.
+# img2audio
+A flask application to generate audio of the content in an image.

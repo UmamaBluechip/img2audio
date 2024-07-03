@@ -1,5 +1,7 @@
-Flask
 transformers
-opencv-python
-requests
-gensim
+Pillow
+datasets
+soundfile
+torch
+flask
+gunicorn

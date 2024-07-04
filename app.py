@@ -1,3 +1,4 @@
+import base64
 import io
 from flask import Flask, render_template, request
 import soundfile as sf
@@ -12,7 +13,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+  return render_template('index.html')
 
 @app.route("/", methods=["GET", "POST"])
 def upload_image():
@@ -24,6 +25,7 @@ def upload_image():
 
             if image_file.filename != '':
                 image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_file.filename)
+                image_file.save(image_path)
                 image_data = image_path 
 
                 extracted_text = image2text(image_path)
@@ -34,11 +36,14 @@ def upload_image():
 
                     if audio_data:
                         audio_bytes = io.BytesIO()
-                        sf.write(audio_data, audio_data["audio"], samplerate=audio_data["sampling_rate"])
-                        audio_data = audio_bytes.getvalue()
+                        sf.write(audio_bytes, audio_data["audio"], samplerate=audio_data["sampling_rate"])
+                        audio_data = base64.b64encode(audio_bytes.getvalue()).decode()
                         audio_bytes.close()
-
-            return render_template("index.html", image_data=image_data, audio_data=audio_data)
+                        
+                        return render_template("index.html", 
+                                   has_image=bool(image_data),
+                                   has_audio=bool(audio_data),
+                                   audio_data=audio_data)
 
         except Exception as e:
             print(f"Error during processing: {e}")

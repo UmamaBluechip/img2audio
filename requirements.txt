@@ -4,4 +4,4 @@ datasets
 soundfile
 torch
 flask
-gunicorn
+packaging

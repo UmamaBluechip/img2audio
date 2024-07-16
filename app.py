@@ -4,6 +4,8 @@ from flask import Flask, render_template, request
 import soundfile as sf
 from functions import image2text, text2audio, textify
 import os
+import subprocess
+subprocess.run('pip install flash-attn --no-build-isolation', env={'FLASH_ATTENTION_SKIP_CUDA_BUILD': "TRUE"}, shell=True)
 
 app = Flask(__name__)
 
